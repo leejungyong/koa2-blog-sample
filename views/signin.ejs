@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>登录</title>
+    <link rel="stylesheet" href="/index.css" />
+    <link rel="icon" href="http://www.wclimb.site/images/avatar.png" />
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <%-include("header",{type:'signin'})%>
+    <div class="container">
+      <form action="" class="form create" method="POST">
+        <div>
+          <label>用户名：</label>
+          <input type="text" placeholder="用户名" name="name" />
+        </div>
+        <div>
+          <label>密码：</label>
+          <input type="password" placeholder="密码" name="password" />
+        </div>
+        <div class="submit">登录</div>
+      </form>
+    </div>
+    <script>
+      $(window).keyup(function(e) {
+        if (e.keyCode == 13) {
+          $('.submit').click()
+        }
+      })
+      $('.submit').click(() => {
+        if (
+          $('input[name=name]')
+            .val()
+            .trim() == '' ||
+          $('input[name=password]')
+            .val()
+            .trim() == ''
+        ) {
+          alert('请输入用户名或密码')
+        } else {
+          console.log($('.form').serialize())
+          $.ajax({
+            url: '/signin',
+            data: $('.form').serialize(), //序列化表单值，创建 URL 编码文本字符串
+            type: 'POST',
+            cache: false,
+            dataType: 'json',
+            success: function(msg) {
+              if (!msg) {
+                $('input').val('')
+                alert('用户名或密码错误')
+              } else {
+                alert('登录成功')
+                setTimeout(() => {
+                  window.location.href = '/posts'
+                }, 1500)
+              }
+            },
+            error: function() {
+              alert('异常！')
+            }
+          })
+        }
+      })
+    </script>
+  </body>
+</html>

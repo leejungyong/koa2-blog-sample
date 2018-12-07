@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>创建文章</title>
+    <link rel="stylesheet" href="index.css" />
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <%-include("header",{type:'create'})%>
+
+    <div class="containr">
+      <form action="" class="form create" method="POST" style="width:100%;">
+        <div>
+          <label>标题：</label>
+          <input type="text" name="title" placeholder="请输入标题" />
+        </div>
+        <div>
+          <label>内容：</label>
+          <textarea
+            name="content"
+            id=""
+            cols="42"
+            rows="10"
+            placeholder="请输入内容"
+          ></textarea>
+        </div>
+        <div class="submit">发表</div>
+      </form>
+    </div>
+    <script>
+      $('.submit').click(() => {
+        if (
+          $('input[name=title]')
+            .val()
+            .trim() == ''
+        ) {
+          alert('请输入标题')
+        } else if (
+          $('textarea')
+            .val()
+            .trim() == ''
+        ) {
+          alert('请输入内容')
+        } else {
+          $.ajax({
+            url: '/create',
+            data: $('.form').serialize(),
+            type: 'POST',
+            cache: false,
+            datatype: 'json',
+            success: function(msg) {
+              if (msg) {
+                alert('发表成功')
+                setTimeout(() => {
+                  window.location.href = '/posts'
+                }, 1000)
+              } else {
+                alert('发表失败')
+              }
+            },
+            error: function() {
+              alert('异常')
+            }
+          })
+        }
+      })
+    </script>
+  </body>
+</html>
