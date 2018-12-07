@@ -7,3 +7,5 @@
 ## 创建数据库 nodesql
 
 ![数据库](https://github.com/leejungyong/koa2-blog-sample/tree/master/public/images/database.png)
+
+![hh](https://github.com/leejungyong/koa2-blog-sample/blob/master/public/images/database.png)
